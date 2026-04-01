@@ -421,11 +421,11 @@ def validate_codelist_enum(*args, fallback=None, allow_enum=_false, allow_missin
             # `type` can be missing if changing an existing property.
             types = get_types(data) if "type" in data else fallback.get(pointer, ["array"])
 
-            if data["openCodelist"]:
+            if data.get("openCodelist"):
                 if ("string" in types and "enum" in data) or ("array" in types and "enum" in data["items"]):
                     errors += 1
                     warn(f'{path} sets "enum", though "openCodelist" is true, at {pointer}', CodelistEnumWarning)
-            else:
+            elif 'openCodelist' in data:
                 if ("string" in types and "enum" not in data) or ("array" in types and "enum" not in data["items"]):
                     errors += 1
                     warn(
