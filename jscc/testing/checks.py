@@ -422,7 +422,7 @@ def validate_codelist_enum(*args, fallback=None, allow_enum=_false, allow_missin
             types = get_types(data) if "type" in data else fallback.get(pointer, ["array"])
 
             if data.get("openCodelist"):
-                if ("string" in types and "enum" in data) or ("array" in types and "enum" in data["items"]):
+                if ("string" in types and "enum" in data) or ("array" in types and "enum" in data.get("items", {})):
                     errors += 1
                     warn(f'{path} sets "enum", though "openCodelist" is true, at {pointer}', CodelistEnumWarning)
             elif 'openCodelist' in data:
